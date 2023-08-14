@@ -14,7 +14,6 @@ const PokemonTable = () => {
         </tr>
       </thead>
       <tbody>
-        <tr></tr>
         {store.filter.match(/\w/gi)
           ? store.filteredPokemonEN
               .slice(0, 200)
