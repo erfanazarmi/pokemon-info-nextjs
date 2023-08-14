@@ -1,9 +1,21 @@
 import { withRouter } from "next/router";
 
-export async function getServerSideProps(context) {
-  const allPokemon = await fetch("https://gist.githubusercontent.com/jherr/23ae3f96cf5ac341c98cd9aa164d2fe3/raw/f8d792f5b2cf97eaaf9f0c2119918f333e348823/pokemon.json")
-  .then((response) => response.json());
-  const pokemon = allPokemon.find(({id}) => id.toString() == context.query.id);
+export async function getStaticPaths() {
+  const allPokemon = require("../../src/pokemon.json");
+  return {
+    paths: allPokemon.map((p) => ({
+      params: {
+        id: p.id.toString(),
+
+      }
+    })),
+    fallback: false
+  }
+}
+
+export async function getStaticProps(context) {
+  const allPokemon = require("../../src/pokemon.json");
+  const pokemon = allPokemon.find(({id}) => id.toString() == context.params.id);
   return {
     props: {
       pokemon

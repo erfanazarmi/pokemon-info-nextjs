@@ -2,7 +2,7 @@ import { makeObservable, observable, computed } from "mobx";
 import { toRomaji } from "wanakana";
 
 class Store {
-  pokemon = [];
+  pokemon = require("./pokemon.json");
   filter = "";
   selectedPokemon = null;
 
@@ -25,7 +25,8 @@ class Store {
   get filteredPokemonJP() {
     return this.pokemon
     .filter((pokemon) =>
-      toRomaji(pokemon.name.japanese).includes(toRomaji(store.filter))
+      toRomaji(pokemon.name.japanese)
+        .includes(toRomaji(this.filter))
     )
   }
 
